@@ -1,0 +1,35 @@
+<!-- saved from url=(0024)http://172.16.2.71:3390/ -->
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+</head>
+
+<body  style="background-image: url(static/picture/b.jpg);background-size:100%;" >
+
+<h1>{{ hello }}</h1>
+
+<p>点击这里查看<a href="./CheckReport" target="_blank">自检测试报告</a></p>
+<p>点击这里查看<a href="./FormalReport" target="_blank">api 正式环境测试报告</a></p>
+<p>点击这里查看<a href="./TestrePort" target="_blank">api 测试环境测试报告</a></p>
+
+
+
+<div style="left: 100px; position: absolute; bottom: 100px;">
+    <p>自检技术实现原理：</p>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;根据Http请求协议，直接采用Http请求URL的方式获取到Request的请求数据，对获取到Response的数据进行断言验证。取消了原有的Java（python）+ Selenium… 直接控制浏览器进行模拟用户进行操作。</br>
+
+<p>使用Http请求自检方式的优点：</p>
+&nbsp;&nbsp;&nbsp;&nbsp;1、可规避页面加载元素不稳定或定位不到元素的风险</br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、因为不用等待元素加载，所以在执行测试用例的时候可以很大的程度上缩减执行的用例的时间</br>
+&nbsp;&nbsp;&nbsp;&nbsp;3、自检是直接对URL进行请求数据，而URL在代码中的一般是不会改变。所以对自检代码的维护成本是很低的</br>
+
+<p>使用Http请求自检方式的缺点：</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;1、因为自检脚本不需要等待元素加载，所以在测试过程中无法测试到js加载以后的Web页面是否稳定，是否可以正常使用。</br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、自检的脚本只可以检测到URL是否可以正常工作的（有请求有响应），有上下级业务关系的URL是否可以使业务数据流正常走通</br>
+
+</div>
+
+</body>
+</html>

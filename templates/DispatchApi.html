@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link href="/static/css/html.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/static/js/jstree/dist/themes/default/style.min.css"/>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script language="javascript" type="text/javascript" src="/static/js/htmljs.js"></script>
+</head>
+<body>
+<div id="header">
+    <h1>Test Orange</h1>
+</div>
+<div id="lazy" class="nav"></div>
+<form action="/dispathapi" method="post" id="form1">
+{% csrf_token %}
+<table border="1px #ooo" id="tab" cellpadding="0" cellspacing="0" width="30%">
+    <tbody>
+        <tr align="center">
+            <td width="10%"><input id="allCkb" onclick="selectall()" type="checkbox"/></td>
+            <td width="30%">key</td>
+            <td width="30%">value</td>
+        </tr>
+    </tbody>
+</table>
+<input type="button" onclick="addTr2('tab', -1)" value="添加"/>
+<input type="button" onclick="delTr2()" value="删除"/>
+<input type='button'  value="提交" onclick="document.getElementById('form1').submit();"/>
+</form>
+<iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe>
+<!--pre id="result"></pre-->
+<p>{{ data }}</p>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/jstree/dist/jstree.min.js"></script>
+<script src="/static/js/fly.min.js"></script>
+
+<div id="footer">
+    Copyright ? www.Test.com
+</div>
+<script>
+    // lazy demo
+    // "//127.0.0.1:3390/index/",
+    // "//www.jstree.com/fiddle/?lazy",
+    $('#lazy').jstree({
+        'core': {
+            'data': {
+                "url": "//127.0.0.1:3390/data/",
+                "data": function (node) {
+                    // alert(node.id+100)
+                    return {"id": node.id};
+                }
+            }
+        }
+
+    }).on('changed.jstree', function (e, data) {
+        fly.config.baseURL = "//127.0.0.1:3390/";
+        fly.get('GetApiParam/', {
+            id: data.instance.get_node(data.selected[0]).id
+        })
+            .then(function (response) {
+                alt(response);
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
+
+
+</script>
+
+</body>
+</html>
